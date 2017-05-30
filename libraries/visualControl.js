@@ -1,23 +1,23 @@
+
 function setup() {
-        createCanvas(800, 800);
+  createCanvas(400, 400);
+}
 
-    }
+function draw() {
+  if (mouseIsPressed) {
+    fill(0);
+  } else {
+    fill(255);
+  }
+  ellipse(mouseX, mouseY, 80, 80);
 
-      function draw() {
-        if (mouseIsPressed) {
-          fill(0);
-        } else {
-          fill(0);
-        }
-        ellipse(mouseX, mouseY, 80, 80);
-      }
+}
 
 // <!--  tracking.js script-->
-
       window.onload = function() {
 
-        var video = document.getElementById('video');
-        var canvas = document.getElementById('canvas');
+        // var video = document.getElementById('video');
+        // var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
         var tracker = new tracking.ObjectTracker('face');
 
@@ -38,8 +38,7 @@ function setup() {
             context.fillStyle = "#fff";
             context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
             context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
-            console.log(rect.x, rect.y)
+            // console.log(rect.x, rect.y)
           });
         });
       };
-    }

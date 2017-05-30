@@ -1,0 +1,19 @@
+<style>
+
+body {padding: 0; margin: 0;}
+
+#video {
+  position: absolute;
+  top: -1000px;
+}
+
+#canvas {
+  left: 50%;
+  top: 50%;
+  margin-left: -200px;
+  margin-top: -150px;
+  position: absolute;
+  z-index: 1
+}
+
+</style>
