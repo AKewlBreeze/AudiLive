@@ -46,12 +46,46 @@
 
 	'use strict';
 
-	// <!--  tracking.js script-->
+	function setup() {
+	  createCanvas(600, 600);
+	}
 
+	// function draw() {
+	//   if (mouseIsPressed) {
+	//     fill(0);
+	//   } else {
+	//     fill(255);
+	//   }
+	//   ellipse(mouseX, mouseY, 80, 80);
+	//
+	// }
+
+
+	var draw = function draw(x, y) {
+	  if (x > 100) {
+	    fill(255);
+	  } else {
+	    fill(0);
+	  }
+
+	  ellipse(x, y, 40, 40);
+	};
+
+	//
+	// let drawing = (x, y)=>{
+	//   if(x > 100){
+	//     console.log(x)
+	//   } else {
+	//     console.log('nope')
+	//   }
+	//   }
+
+
+	// <!--  tracking.js script-->
 	window.onload = function () {
 
-	  var video = document.getElementById('video');
-	  var canvas = document.getElementById('canvas');
+	  // var video = document.getElementById('video');
+	  // var canvas = document.getElementById('canvas');
 	  var context = canvas.getContext('2d');
 	  var tracker = new tracking.ObjectTracker('face');
 
@@ -65,26 +99,16 @@
 	    context.clearRect(0, 0, canvas.width, canvas.height);
 
 	    event.data.forEach(function (rect) {
-	      console.log(rect, 1);
+	      // console.log(rect, 1);
 	      context.strokeStyle = '#a64ceb';
 	      context.strokeRect(rect.x, rect.y, rect.width, rect.height);
 	      context.font = '11px Helvetica';
 	      context.fillStyle = "#fff";
 	      context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
 	      context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
-	      function setup() {
-	        createCanvas(800, 800);
-	      }
-
-	      // function draw() {
-	      //   if (mouseIsPressed) {
-	      //     fill(0);
-	      //   } else {
-	      //     fill(0);
-	      //   }
-	      //   ellipse(mouseX, mouseY, 80, 80);
-	      //   console.log(rect.x, rect.y)
-	      // }
+	      draw(rect.x, rect.y);
+	      // drawing(rect.x, rect.y);
+	      // console.log(rect.x, rect.y)
 	    });
 	  });
 	};
