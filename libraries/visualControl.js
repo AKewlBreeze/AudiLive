@@ -1,48 +1,103 @@
 
 let faces = [];
+let system;
 
 function setup() {
   createCanvas(600, 600);
+  system = new ParticleSystem(createVector(width/2, 50));
 }
 
 function draw() {
   if(faces.length == 0) {
-    background(0, 255, 0);
+    background(153, 0, 0);
   } else {
     background(faces[0].x, faces[0].y, 0, 30);
   }
   faces.forEach(face => {
-    console.log(face)
     drawFace(face);
+    system.addParticle();
+    system.run();
+
   });
+
   drawFunStuff();
 }
 
+// A simple Particle class
+var Particle = function(position) {
+  this.acceleration = createVector(0, 0.05, 250);
+  this.velocity = createVector(random(-1, 1), random(-1, 0));
+  this.position = position.copy();
+  this.lifespan = 1000.0;
+};
+
+Particle.prototype.run = function() {
+  this.update();
+  this.display();
+};
+
+// Method to update position
+Particle.prototype.update = function(){
+  this.velocity.add(this.acceleration);
+  this.position.add(this.velocity);
+  this.lifespan -= 2;
+};
+
+// Method to display
+Particle.prototype.display = function() {
+  stroke(20, this.lifespan);
+  strokeWeight(1);
+  fill(127, this.lifespan);
+  triangle(this.position.x, this.position.y, 0, 0);
+
+};
+
+// Is the particle still useful?
+Particle.prototype.isDead = function(){
+  if (this.lifespan < 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+
+var ParticleSystem = function(position) {
+  this.origin = position.copy();
+  this.particles = [];
+};
+
+ParticleSystem.prototype.addParticle = function() {
+  this.particles.push(new Particle(this.origin));
+};
+
+ParticleSystem.prototype.run = function() {
+  for (var i = this.particles.length-1; i >= 0; i--) {
+    var p = this.particles[i];
+    p.run();
+    if (p.isDead()) {
+      this.particles.splice(i, 1);
+    }
+  }
+};
+
+
+
 function drawFace(faceObj) {
-  if (faceObj.x > 100) {
+  if (faceObj.x > 250) {
     fill(0);
   } else {
-    fill(255, 0, 0);
+    fill(250);
   }
   let mappedX = map(faceObj.x, 0, 320, 0, width * devicePixelRatio);
   let mappedY = map(faceObj.y, 0, 240, 0, height * devicePixelRatio);
-  ellipse(mappedX, mappedY, faceObj.width, faceObj.height)
+  triangle(mappedX, mappedY, faceObj.width, faceObj.height)
 }
 
 function drawFunStuff() {
 
 }
 
-/*
-function draw() {
-  if (mouseIsPressed) {
-    fill(0);
-  } else {
-    fill(255);
-  }
-  ellipse(mouseX, mouseY, 80, 80);
-}
-*/
 
 
 // <!--  tracking.js script-->
@@ -60,17 +115,3 @@ window.onload = function() {
     }
   });
 };
-
-
-/*
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.strokeStyle = '#a64ceb';
-      context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-      context.font = '11px Helvetica';
-      context.fillStyle = "#fff";
-      context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
-      context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
-      draw(rect.x, rect.y);
-      // drawing(rect.x, rect.y);
-      // console.log(rect.x, rect.y)
-      */
