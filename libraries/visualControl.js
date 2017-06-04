@@ -1,3 +1,4 @@
+
 let faces = [];
 
 function setup() {
@@ -11,6 +12,7 @@ function draw() {
     background(faces[0].x, faces[0].y, 0, 30);
   }
   faces.forEach(face => {
+    console.log(face)
     drawFace(face);
   });
   drawFunStuff();
