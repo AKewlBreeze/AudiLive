@@ -1,9 +1,12 @@
-
 let faces = [];
 let system;
 
+
+
+
+
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(1000, 1000);
   system = new ParticleSystem(createVector(width/2, 50));
 }
 
@@ -20,10 +23,10 @@ function draw() {
 
   });
 
-  drawFunStuff();
+
 }
 
-// A simple Particle class
+
 var Particle = function(position) {
   this.acceleration = createVector(0, 0.05, 250);
   this.velocity = createVector(random(-1, 1), random(-1, 0));
@@ -36,14 +39,14 @@ Particle.prototype.run = function() {
   this.display();
 };
 
-// Method to update position
+
 Particle.prototype.update = function(){
   this.velocity.add(this.acceleration);
   this.position.add(this.velocity);
   this.lifespan -= 2;
 };
 
-// Method to display
+
 Particle.prototype.display = function() {
   stroke(20, this.lifespan);
   strokeWeight(1);
@@ -52,7 +55,7 @@ Particle.prototype.display = function() {
 
 };
 
-// Is the particle still useful?
+
 Particle.prototype.isDead = function(){
   if (this.lifespan < 0) {
     return true;
@@ -93,11 +96,6 @@ function drawFace(faceObj) {
   let mappedY = map(faceObj.y, 0, 240, 0, height * devicePixelRatio);
   triangle(mappedX, mappedY, faceObj.width, faceObj.height)
 }
-
-function drawFunStuff() {
-
-}
-
 
 
 // <!--  tracking.js script-->
